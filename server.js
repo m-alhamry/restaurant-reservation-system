@@ -5,7 +5,7 @@ const session = require('express-session');
 require('dotenv').config();
 const authRouter = require('./routes/authRouter');
 // const reservationRouter = require('./routes/reservationRouter');
-// const staffRouter = require('./routes/staffRouter');
+const staffRouter = require('./routes/staffRouter');
 // const userRouter = require('./routes/userRouter');
 const db = require('./db'); // Connect to MongoDB
 
@@ -31,7 +31,7 @@ app.use(express.static('public')); // Serve static files
 app.use('/auth', authRouter);
 // app.use('/users', userRouter);
 // app.use('/reservations', reservationRouter);
-// app.use('/staff', staffRouter);
+app.use('/staff', staffRouter);
 
 // Set up the base route
 app.get('/', (req, res) => {
