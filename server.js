@@ -30,9 +30,9 @@ app.use(express.static('public')) // Serve static files
 
 // Routes
 app.use('/auth', authRouter)
-app.use('/users', userRouter)
-app.use('/reservations', reservationRouter)
-app.use('/staff', staffRouter)
+// app.use('/users', userRouter)
+// app.use('/reservations', reservationRouter)
+// app.use('/staff', staffRouter)
 
 // Set up the base route
 app.get('/', (req, res) => {
