@@ -22,8 +22,7 @@ const registerUser = async (req, res) => {
       picture: req.body.picture,
       role: "costumer",
     })
-    res.send(`thank you ${user}`)
-    // This will be an EJS page later...
+    res.render('./auth/thanks.ejs', { user })  
   } catch (error) {
     console.error('An error has occurred registering a user!', error.message)
   }
@@ -50,7 +49,7 @@ const signInUser = async (req, res) => {
     //   email: user.email,
     //   _id: user._id
     // }
-    res.send(`userId sign in: ${user._id}`)
+    res.send(`Thanks for signing in ${user.firstName} !`)
     // This will be an EJS page or redirect later...
   } catch (error) {
     console.error('An error has occurred signing in a user!', error.message)
