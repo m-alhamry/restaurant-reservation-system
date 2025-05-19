@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     phoneNo: { type: String, required: true },
     role: { type: String, required: true },
     picture: { type: String },
+    reservations: [{ type: mongoose.Schema.Types.ObjectId, ref:'User'}],
   },
   { timestamps: true }
 )
