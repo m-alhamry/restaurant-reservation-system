@@ -12,7 +12,7 @@ const db = require('./db'); // Connect to MongoDB
 const app = express();
 
 // Middleware
-app.use(logger('dev')); // Logging
+app.use(logger('dev')); // Loggingc
 app.use(express.json()); // Parse JSON
 app.use(express.urlencoded({ extended: false })); // Parse form data
 app.use(methodOverride('_method')); // Support PUT/DELETE in forms
