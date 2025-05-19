@@ -2,15 +2,18 @@ const User = require('../models/User.js')
 
 const getUserById = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id)
+        const user = await User.findById(req.params.id).populate('reservations')
 
 const data = {
-    first: user.first,
-    last: user.last,
-    picture: user.picture
+    firstName: user.firstName,
+    lastName: user.lastName,
+    phoneNo: user.phoneNo,
+    role: user.role,
+    picture: user.picture,
+    reservations: user.reservations
   }
 
-res.render('./users/profile.ejs', { user })
+res.render('./reservations/all.ejs', { user })
 
     } catch (error) {
         console.error('An error has occurred finding a user!', error.message)
