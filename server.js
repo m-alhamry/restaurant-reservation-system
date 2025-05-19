@@ -3,13 +3,11 @@ const logger = require('morgan');
 const methodOverride = require('method-override');
 const session = require('express-session');
 require('dotenv').config();
-const authRouter = require('./routes/authRouter');
+// const authRouter = require('./routes/authRouter');
 // const reservationRouter = require('./routes/reservationRouter');
-const staffRouter = require('./routes/staffRouter');
+// const staffRouter = require('./routes/staffRouter');
 // const userRouter = require('./routes/userRouter');
 const db = require('./db'); // Connect to MongoDB
-
-const db = require('./db') // Connect to MongoDB
 
 const authRouter = require('./routes/authRouter.js')
 const reservationRouter = require('./routes/reservationRouter.js')
