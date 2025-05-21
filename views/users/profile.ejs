@@ -1,0 +1,13 @@
+<%- include('../partials/header') %>
+    <h1>Your Profile</h1>
+    <p><strong>Name:</strong> <%= user.firstName %> <%= user.lastName %></p>
+    <p><strong>Email:</strong> <%= user.email %></p>
+    <p><strong>Phone:</strong> <%= user.phoneNo %></p>
+    <p><strong>Role:</strong> <%= user.role %></p>
+    <% if (user.role === 'customer') { %>
+        <a href="/reservations">View My Reservations</a>
+    <% } %>
+    <div>
+        <a href="/auth/update-password">Update Password</a>
+    </div>
+<%- include('../partials/footer') %>

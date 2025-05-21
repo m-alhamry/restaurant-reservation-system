@@ -3,7 +3,7 @@ const TimeSlot = require('../models/TimeSlot');
 const getAllTimeSlots = async (req, res) => {
     try {
         const timeSlots = await TimeSlot.find().sort({ date: 1, time: 1 });
-        res.send(`all time slots: ${timeSlots}`);
+        res.render('staff/timeslots/all', { timeSlots: timeSlots });
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');
@@ -23,10 +23,10 @@ const postNewTimeSlot = async (req, res) => {
             reserverd: 0
         });
         await timeSlot.save();
-        res.send(`new time slot created: ${timeSlot}`);
+        res.redirect('/staff/timeslots');
     } catch (err) {
         console.error(err);
-        res.send(err);
+        res.render('staff/timeSlots/new', { error: err });
     }
 };
 
@@ -36,7 +36,7 @@ const getEditTimeSlot = async (req, res) => {
         if (!timeSlot) {
             return res.status(404).send('Time slot not found');
         }
-        res.send(`time slot ID to edit: ${ timeSlot }`);
+        res.render('staff/timeSlots/edit', { timeSlot, error: null });
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');
@@ -47,13 +47,13 @@ const putEditTimeSlot = async (req, res) => {
     try {
         const timeSlot = await TimeSlot.findById(req.params.id);
         if (!timeSlot) {
-            return res.status(404).send('Time slot not found');
+            return res.send('Time slot not found');
         }
         timeSlot.date = new Date(req.body.date);
         timeSlot.time = req.body.time;
         timeSlot.capacity = parseInt(req.body.capacity);
         await timeSlot.save();
-        res.send(`time slot id:${timeSlot._id} updated successfully!`);
+        res.redirect('/staff/timeslots');
     } catch (err) {
         console.error(err);
         res.send(err);
@@ -63,7 +63,7 @@ const putEditTimeSlot = async (req, res) => {
 const deleteTimeSlot = async (req, res) => {
     try {
         await TimeSlot.findByIdAndDelete(req.params.id)
-        res.send('time slot deleted successfully!');
+        res.redirect('/staff/timeslots');
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');

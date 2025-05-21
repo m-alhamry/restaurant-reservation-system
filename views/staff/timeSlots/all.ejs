@@ -1,0 +1,31 @@
+<%- include('../../partials/header') %>
+    <h1>Manage Time Slots</h1>
+    <a href="/staff/timeslots/new">Add New Time Slot</a>
+    <% if (timeSlots.length === 0) { %>
+        <p>No time slots available.</p>
+    <% } else { %>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Capacity</th>
+                <th>Reserved</th>
+                <th>Actions</th>
+            </tr>
+            <% timeSlots.forEach(slot => { %>
+                <tr>
+                    <td><%= slot.date.toDateString() %></td>
+                    <td><%= slot.time %></td>
+                    <td><%= slot.capacity %></td>
+                    <td><%= slot.reserved %></td>
+                    <td>
+                        <a href="/staff/timeslots/<%= slot._id %>/edit">Edit</a>
+                        <form method="POST" action="/staff/timeslots/<%= slot._id %>?_method=DELETE" style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </table>
+    <% } %>
+<%- include('../../partials/footer') %>
