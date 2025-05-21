@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+    <h1>My Reservations</h1>
+    <a href="/reservations/new">Make a New Reservation</a>
+    <% if (reservations.length === 0) { %>
+        <p>No reservations found.</p>
+    <% } else { %>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>People</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            <% reservations.forEach(reservation => { %>
+                <tr>
+                    <td><%= reservation.timeSlot.date.toDateString() %></td>
+                    <td><%= reservation.timeSlot.time %></td>
+                    <td><%= reservation.numberOfPeople %></td>
+                    <td><%= reservation.status %></td>
+                    <td>
+                        <% if (reservation.status !== 'cancelled') { %>
+                            <form method="POST" action="/reservations/<%= reservation._id %>?_method=PUT" style="display:inline;">
+                                <button type="submit">Cancel</button>
+                            </form>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+        </table>
+    <% } %>
+<%- include('../partials/footer') %>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Restaurant Reservation System</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <% if (typeof user !=='undefined' && user) { %>
+                <a href="/users/profile">My Profile</a>
+            <% if (user.role==='customer' ) { %>
+                <a href="/reservations">My Reservations</a>
+            <% } else if (user.role==='staff' ) { %>
+                <a href="/staff/reservations">All Reservations</a>
+                <a href="/staff/timeslots">Manage Time Slots</a>
+            <% } %>
+                <a href="/auth/sign-Out">Sign-Out</a>
+            <% } else { %>
+                <a href="/auth/sign-in">Sign-In</a>
+                <a href="/auth/sign-up">Sign-Up</a>
+            <% } %>
+        </nav>
+    </header>

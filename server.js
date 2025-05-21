@@ -3,16 +3,13 @@ const logger = require('morgan');
 const methodOverride = require('method-override');
 const session = require('express-session');
 require('dotenv').config();
-// const authRouter = require('./routes/authRouter');
-// const reservationRouter = require('./routes/reservationRouter');
-// const staffRouter = require('./routes/staffRouter');
-// const userRouter = require('./routes/userRouter');
 const db = require('./db'); // Connect to MongoDB
 
 const authRouter = require('./routes/authRouter.js')
 const reservationRouter = require('./routes/reservationRouter.js')
 const staffRouter = require('./routes/staffRouter.js')
 const userRouter = require('./routes/userRouter.js')
+
 const app = express()
 
 // Middleware
@@ -31,16 +28,18 @@ app.use((req, res, next) => {
 })
 app.use(express.static('public')) // Serve static files
 
-// Routes
+// View engine
+app.set('view engine', 'ejs');
 
+// Routes
 app.use('/auth', authRouter)
-//app.use('/users', userRouter)
+app.use('/users', userRouter)
 app.use('/reservations', reservationRouter)
-// app.use('/staff', staffRouter)
+app.use('/staff', staffRouter)
 
 // Set up the base route
 app.get('/', (req, res) => {
-    res.render('index.ejs')
+    res.render('index.ejs', { user: req.session.user? req.session.user: null })
 })
 
 // Listen on PORT

@@ -1,0 +1,6 @@
+<%- include('partials/header') %>
+    <h1>Welcome to the Restaurant Reservation System</h1>
+    <% if (!user) { %>
+        <p><a href="/auth/sign-up">Sign-Up</a> or <a href="/auth/sign-in">Sign-In</a> to get started.</p>
+    <% } %>
+<%- include('partials/footer') %>
