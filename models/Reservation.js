@@ -1,15 +1,14 @@
 const mongoose = require('mongoose')
 
-const reservationSchema = new mongoose.Schema({
-    Reservation: {type: String, require: true},
-    date: { type: String, require: true},
-    time: { type: String, require: true},
-    how_many: { type: String, require: true},
-    client : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reservs', required: true}],
-},
-    {timestamps: true}  
+const reservationSchema = new mongoose.Schema(
+    {
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        timeSlot: { type: mongoose.Schema.Types.ObjectId, ref: 'TimeSlot', required: true },
+        numberOfPeople: { type: Number, required: true },
+        status: { type: String, enum: ['pending', 'confirmed', 'cancelled'], default: 'pending' }
+    },
+    { timestamps: true }
 )
 
-const Reservs = mongoose.model('Reservs', reservationSchema)
-module.exports = Reservs
-
+const Reservation = mongoose.model('Reservation', reservationSchema)
+module.exports = Reservation
