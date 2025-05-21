@@ -1,20 +1,16 @@
 const express = require('express')
 const router = express.Router()
 
-const Reserv = require('../models/Reservation.js')
 const reserveController = require('../controllers/reserveController.js')
 
 router.post('/', reserveController.createReservation)
 
-router.get('/', reserveController.getAllReserve)
+router.get('/', reserveController.getCustomerReservations)
 
-router.get('/new', (req, res) => {
-    res.render('./reservations/new.ejs')
-  })
+router.get('/new', reserveController.getNewReservation)
 
+router.get('/new', reserveController.postNewReservation)
 
-router.get('/:id', reserveController.getReservationById)
-
-router.delete('/:id', reserveController.deleteReservationById )
+router.put('/:id', reserveController.cancelReservationById )
 
 module.exports = router
