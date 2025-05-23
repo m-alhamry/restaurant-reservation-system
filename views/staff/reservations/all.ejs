@@ -34,11 +34,11 @@
                         <td>
                             <% if (reservation.status==='pending' ) { %>
                                 <form action="/staff/reservations/<%= reservation._id %>/confirm"
-                                    style="display:inline;" method="POST">
+                                    style="display:inline;" method="POST" onsubmit="return confirm('Are you sure you want to confirm the customer reservation on <%= reservation.timeSlot.date.toDateString() %> at <%= reservation.timeSlot.time %>?');">
                                     <button type="submit">Confirm</button>
                                 </form>
                                 <form action="/staff/reservations/<%= reservation._id %>/cancel"
-                                    style="display:inline;" method="POST">
+                                    style="display:inline;" method="POST" onsubmit="return confirm('Are you sure you want to confirm the customer reservation on <%= reservation.timeSlot.date.toDateString() %> at <%= reservation.timeSlot.time %>?');">
                                     <button type="submit">Cancel</button>
                                 </form>
                             <% } %>

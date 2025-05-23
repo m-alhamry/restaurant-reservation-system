@@ -1,4 +1,5 @@
 const TimeSlot = require('../models/TimeSlot');
+const Reservation = require('../models/Reservation');
 
 const getAllTimeSlots = async (req, res) => {
     try {
@@ -6,7 +7,7 @@ const getAllTimeSlots = async (req, res) => {
         res.render('staff/timeSlots/all.ejs', { timeSlots: timeSlots });
     } catch (err) {
         console.error(err);
-        res.send('Server error');
+        res.redirect('/');
     }
 };
 
@@ -26,47 +27,18 @@ const postNewTimeSlot = async (req, res) => {
         res.redirect('/staff/timeSlots');
     } catch (err) {
         console.error(err);
-        res.render('staff/timeSlots/new', { error: err });
+        res.render('staff/timeSlots/new', { error: "Unexpected error occurs! Please try again..." });
     }
 };
-
-const getEditTimeSlot = async (req, res) => {
-    try {
-        const timeSlot = await TimeSlot.findById(req.params.id);
-        if (!timeSlot) {
-            return res.send('Time slot not found');
-        }
-        res.render('staff/timeSlots/edit', { timeSlot, error: null });
-    } catch (err) {
-        console.error(err);
-        res.send('Server error');
-    }
-};
-
-// const putEditTimeSlot = async (req, res) => {
-//     try {
-//         const timeSlot = await TimeSlot.findById(req.params.id);
-//         if (!timeSlot) {
-//             return res.send('Time slot not found');
-//         }
-//         timeSlot.date = new Date(req.body.date);
-//         timeSlot.time = req.body.time;
-//         timeSlot.capacity = parseInt(req.body.capacity);
-//         await timeSlot.save();
-//         res.redirect('/staff/timeSlots');
-//     } catch (err) {
-//         console.error(err);
-//         res.send(err);
-//     }
-// };
 
 const deleteTimeSlot = async (req, res) => {
     try {
-        await TimeSlot.findByIdAndDelete(req.params.id)
+        await TimeSlot.findByIdAndDelete(req.params.id);
+        await Reservation.deleteMany({ timeSlot: req.params.id });
         res.redirect('/staff/timeSlots');
     } catch (err) {
         console.error(err);
-        res.send('Server error');
+        res.render('staff/timeSlots/new', { error: "Unexpected error occurs! Please try again..." });
     }
 };
 
@@ -74,7 +46,5 @@ module.exports = {
   getAllTimeSlots,
   getNewTimeSlot,
   postNewTimeSlot,
-  getEditTimeSlot,
-//   putEditTimeSlot, // no need for editting, just delete and make new time slot
   deleteTimeSlot,
 }
