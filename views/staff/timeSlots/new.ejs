@@ -3,7 +3,7 @@
     <% if (error) { %>
         <p style="color: red;"><%= error %></p>
     <% } %>
-    <form method="POST" action="/staff/timeslots">
+    <form method="POST" action="/staff/timeSlots">
         <label>Date: <input type="date" name="date" required></label><br>
         <label>Time: <input type="time" name="time" required></label><br>
         <label>Capacity: <input type="number" name="capacity" min="1" required></label><br>

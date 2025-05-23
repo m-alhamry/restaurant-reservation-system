@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const User = require('./models/User');
 require('dotenv').config();
 const db = require('./db'); // Connect to MongoDB
 
@@ -22,11 +23,19 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }))
-app.use((req, res, next) => {
-  res.locals.user = req.session.user
-  next()
-})
-app.use(express.static('public')) // Serve static files
+
+// Fetch user from database based on session userId
+app.use(async (req, res, next) => {
+  if (req.session.user) {
+    res.locals.user = await User.findById(req.session.user.id);
+  } else {
+    res.locals.user = null;
+  }
+  next();
+});
+
+// Serve static files
+app.use(express.static('public'))
 
 // View engine
 app.set('view engine', 'ejs');

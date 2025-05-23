@@ -3,7 +3,7 @@
     <% if (error) { %>
         <p style="color: red;"><%= error %></p>
     <% } %>
-    <form method="POST" action="/staff/timeslots/<%= timeSlot._id %>?_method=PUT">
+    <form method="POST" action="/staff/timeSlots/<%= timeSlot._id %>?_method=PUT">
         <label>Date: <input type="date" name="date" value="<%= timeSlot.date.toISOString().split('T')[0] %>" required></label><br>
         <label>Time: <input type="time" name="time" value="<%= timeSlot.time %>" required></label><br>
         <label>Capacity: <input type="number" name="capacity" value="<%= timeSlot.capacity %>" min="1" required></label><br>

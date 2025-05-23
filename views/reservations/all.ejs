@@ -13,19 +13,21 @@
                 <th>Actions</th>
             </tr>
             <% reservations.forEach(reservation => { %>
-                <tr>
-                    <td><%= reservation.timeSlot.date.toDateString() %></td>
-                    <td><%= reservation.timeSlot.time %></td>
-                    <td><%= reservation.numberOfPeople %></td>
-                    <td><%= reservation.status %></td>
-                    <td>
-                        <% if (reservation.status !== 'cancelled') { %>
-                            <form method="POST" action="/reservations/<%= reservation._id %>?_method=PUT" style="display:inline;">
-                                <button type="submit">Cancel</button>
-                            </form>
-                        <% } %>
-                    </td>
-                </tr>
+                <% if (reservation.timeSlot) { %>
+                    <tr>
+                        <td><%= reservation.timeSlot.date.toDateString() %></td>
+                        <td><%= reservation.timeSlot.time %></td>
+                        <td><%= reservation.numberOfPeople %></td>
+                        <td><%= reservation.status %></td>
+                        <td>
+                            <% if (reservation.status !== 'cancelled') { %>
+                                <form method="POST" action="/reservations/<%= reservation._id %>?_method=PUT" style="display:inline;">
+                                    <button type="submit">Cancel</button>
+                                </form>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% } %>
             <% }) %>
         </table>
     <% } %>

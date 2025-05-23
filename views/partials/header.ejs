@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Reservation System</title>
     <link rel="stylesheet" href="/style.css">
 </head>
@@ -15,7 +17,7 @@
                 <a href="/reservations">My Reservations</a>
             <% } else if (user.role==='staff' ) { %>
                 <a href="/staff/reservations">All Reservations</a>
-                <a href="/staff/timeslots">Manage Time Slots</a>
+                <a href="/staff/timeSlots">Manage Time Slots</a>
             <% } %>
                 <a href="/auth/sign-Out">Sign-Out</a>
             <% } else { %>
