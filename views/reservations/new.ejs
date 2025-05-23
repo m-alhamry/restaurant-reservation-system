@@ -3,7 +3,7 @@
     <% if (error) { %>
         <p style="color: red;"><%= error %></p>
     <% } %>
-    <form action="/reservations" method="POST">
+    <form action="/reservations" method="POST" onsubmit="return confirm('Are you sure you want to submit your reservation?');">
         <div>
             <label for="timeSlotId">Select Time Slot:</label>
             <select id="timeSlotId" name="timeSlotId" required>

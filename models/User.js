@@ -20,7 +20,7 @@ userSchema.virtual('pictureUrl').get(function () {
   if (this.picture && this.picture.data) {
     return `data:${this.picture.contentType};base64,${this.picture.data.toString('base64')}`;
   }
-  return null;
+  return '/assets/images/default_profile_image.jpeg'; // Default image path
 });
 
 const User = mongoose.model('User', userSchema)

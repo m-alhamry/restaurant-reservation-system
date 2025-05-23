@@ -8,8 +8,6 @@ const reservationController = require('../controllers/reserveController');
 router.get('/timeSlots', auth.isAuthenticated, auth.isStaff, timeSlotController.getAllTimeSlots);
 router.get('/timeSlots/new', auth.isAuthenticated, auth.isStaff, timeSlotController.getNewTimeSlot);
 router.post('/timeSlots', auth.isAuthenticated, auth.isStaff, timeSlotController.postNewTimeSlot);
-router.get('/timeSlots/:id/edit', auth.isAuthenticated, auth.isStaff, timeSlotController.getEditTimeSlot);
-// router.put('/timeSlots/:id', auth.isAuthenticated, auth.isStaff, timeSlotController.putEditTimeSlot); // no need for editting, just delete and make new time slot
 router.delete('/timeSlots/:id', auth.isAuthenticated, auth.isStaff, timeSlotController.deleteTimeSlot);
 
 // Reservations

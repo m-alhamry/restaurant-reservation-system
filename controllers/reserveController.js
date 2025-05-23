@@ -1,17 +1,27 @@
 const Reservation = require('../models/Reservation');
 const TimeSlot = require('../models/TimeSlot');
 
+const getAvailableTimeSlots = async () => {
+    try {
+        const availableTimeSlots = await TimeSlot.find().sort({ date: 1, time: 1 });
+        return availableTimeSlots;
+    } catch (err) {
+        return null;
+    }
+}
+
 // Customer Reservation methods
 const createReservation = async (req, res) => {
-    const { timeSlotId, numberOfPeople } = req.body
+    const timeSlotId = req.body.timeSlotId;
+    const numberOfPeople = req.body.numberOfPeople;
     try {
         const timeSlot = await TimeSlot.findById(timeSlotId);
         if (!timeSlot) {
-            return res.render('/reservations/new', { error: 'Time slot not found' });
+            return res.render('./reservations/new.ejs', { availableTimeSlots: await getAvailableTimeSlots(), error: 'Time slot not found!' });
         }
         const numPeople = parseInt(numberOfPeople);
         if (timeSlot.reserved + numPeople > timeSlot.capacity) {
-            return res.render('reservations/new', { error: 'Not enough capacity available' });
+            return res.render('./reservations/new.ejs', { availableTimeSlots: await getAvailableTimeSlots(), error: 'Not enough capacity available' });
         }
         const reservation = new Reservation({
             user: req.session.user.id,
@@ -22,20 +32,19 @@ const createReservation = async (req, res) => {
         await reservation.save();
         timeSlot.reserved += numPeople;
         await timeSlot.save();
-        res.redirect('/reservations');
-    } catch (error) {
-        res.render('/reservations/new', { error: `An error occured creating a reservation!: ${error.message}` });
-        console.error('An error occured creating a reservation!', error.message)
+        res.redirect('./reservations');
+    } catch (err) {
+        res.render('./reservations/new.ejs', { availableTimeSlots: await getAvailableTimeSlots(), error: 'Unexpected error occured! please try again...' });
+        console.error(err);
     }
 
 }
 
 const getNewReservation = async (req, res) => {
     try {
-        const availableTimeSlots = await TimeSlot.find().sort({ date: 1, time: 1 });
-        res.render('reservations/new', { availableTimeSlots, error: null });
-    } catch (error) {
-        res.render('reservations/new', { error: error });
+        res.render('./reservations/new.ejs', { availableTimeSlots: await getAvailableTimeSlots(), error: null });
+    } catch (err) {
+        res.redirect('/');
         console.error(err);
     }
 };
@@ -45,9 +54,10 @@ const getCustomerReservations = async (req, res) => {
         const reservations = await Reservation.find({ user: req.session.user.id })
             .populate('timeSlot')
             .sort({ 'timeSlot.date': 1, 'timeSlot.time': 1 });
-        res.render('reservations/all', { reservations });
-    } catch (error) {
-        console.error('An error occured creating a reservation!', error.message);
+        res.render('./reservations/all.ejs', { reservations, error: null });
+    } catch (err) {
+        res.redirect('/');
+        console.error(err);
     }
 }
 
@@ -56,16 +66,19 @@ const cancelReservationById = async (req, res) => {
         const reservation = await Reservation.findOne({ _id: req.params.id, user: req.session.user.id })
             .populate('timeSlot');
         if (!reservation) {
-            return res.render(`./reservations/${req.params.id}`, { error: 'Reservation not found!' })
+            const reservations = await Reservation.find({ user: req.session.user.id })
+                .populate('timeSlot')
+                .sort({ 'timeSlot.date': 1, 'timeSlot.time': 1 });
+            return res.render('./reservations/all.ejs', { reservations, error: 'Reservation to be cancelled not found!' });
         }
         reservation.status = 'cancelled';
         await reservation.save();
         reservation.timeSlot.reserved -= reservation.numberOfPeople;
         await reservation.timeSlot.save();
         res.redirect('/reservations');
-    } catch (error) {
-        res.render(`./reservations/${req.params.id}`, { error: error })
-        console.error(error);
+    } catch (err) {
+        res.redirect('/');
+        console.error(err);
     }
 }
 // End Customer Reservation methods
@@ -79,8 +92,8 @@ const getAllReservations = async (req, res) => {
             .sort({ 'timeSlot.date': 1, 'timeSlot.time': 1 });
         res.render('staff/reservations/all', { reservations });
     } catch (err) {
+        res.redirect('/');
         console.error(err);
-        res.send('Server error');
     }
 };
 
@@ -88,14 +101,15 @@ const postConfirmReservation = async (req, res) => {
     try {
         const reservation = await Reservation.findById(req.params.id);
         if (!reservation) {
-            return res.send('Reservation not found');
+            console.error("Reservation not found!");
+            return res.redirect('/staff/reservations');
         }
         reservation.status = 'confirmed';
         await reservation.save();
         res.redirect('/staff/reservations');
     } catch (err) {
+        res.redirect('/staff/reservations');
         console.error(err);
-        res.send('Server error');
     }
 };
 
@@ -103,7 +117,8 @@ const postCancelReservation = async (req, res) => {
     try {
         const reservation = await Reservation.findById(req.params.id).populate('timeSlot');
         if (!reservation) {
-            return res.send('Reservation not found');
+            console.error('Reservation not found');
+            return res.redirect('/staff/reservations');
         }
         reservation.status = 'cancelled';
         await reservation.save();
@@ -111,8 +126,8 @@ const postCancelReservation = async (req, res) => {
         await reservation.timeSlot.save();
         res.redirect('/staff/reservations');
     } catch (err) {
+        res.redirect('/staff/reservations');
         console.error(err);
-        res.send('Server error');
     }
 };
 // End Staff Reservation methods

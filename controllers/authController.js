@@ -1,23 +1,54 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
+// RegEx patterns for validation
+const nameRegex = /^[a-zA-Z\s-]{2,50}$/; // Allows letters (a-z, A-Z), spaces, and hyphens; min 2 max 50 characters
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; // Standard email formats (user@example.com).
+const phoneRegex = /^\d{8}$/; // Matches exactly 8 digits, for Bahrain phone numbers
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/; // At least one letter, one number, and one special character; min 8 characters
+
 const registerUser = async (req, res) => {
   try {
-    const userInDatabase = await User.findOne({ email: req.body.email })
+    const firstName = req.body.firstName.trim();
+    const lastName = req.body.lastName.trim();
+    const email = req.body.email.trim();
+    const phoneNo = req.body.phoneNo.trim();
+    const password = req.body.password.trim();
+    const confirmPassword = req.body.confirmPassword.trim();
+
+    // Validate user inputs
+    if (!firstName || !nameRegex.test(firstName)) {
+      return res.render('auth/sign-up.ejs', { error: 'First name must be 2–50 characters long, and contain only letters, spaces, or hyphens' });
+    }
+    if (!lastName || !nameRegex.test(lastName)) {
+      return res.render('auth/sign-up.ejs', { error: 'Last name must be 2–50 characters long and contain only letters, spaces, or hyphens' });
+    }
+    if (!email || !emailRegex.test(email)) {
+      return res.render('auth/sign-up.ejs', { error: 'Invalid email format' });
+    }
+    if (phoneNo && !phoneRegex.test(phoneNo)) { // Phone number is optional field
+      return res.render('auth/sign-up.ejs', { error: 'Phone number must be 8 digits (Bahraini phone number)' });
+    }
+    if (!password || !passwordRegex.test(password)) {
+      return res.render('auth/sign-up.ejs', { error: 'Password must be at least 8 characters long, with at least one letter, one number, and one special character' });
+    }
+    if (password !== confirmPassword) {
+      return res.render('auth/sign-up.ejs', { error: 'Passwords do not match' });
+    }
+
+    const userInDatabase = await User.findOne({ email: email });
     if (userInDatabase) {
       return res.render('auth/sign-up.ejs', { error: 'Email already in use' });
     }
-    if (req.body.password !== req.body.confirmPassword) {
-      return res.render('auth/sign-up.ejs', { error: 'Password and Confirm Password must match' });
-    }
-    const hashedPassword = bcrypt.hashSync(req.body.password, 12)
+
+    const hashedPassword = bcrypt.hashSync(password, 12);
 
     const userData = {
-      email: req.body.email,
+      email: email,
       password: hashedPassword,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      phoneNo: req.body.phoneNo,
+      firstName: firstName,
+      lastName: lastName,
+      phoneNo: phoneNo,
       role: req.body.role // 'customer', // Staff accounts created separately (e.g., by admin)
     };
 
@@ -29,71 +60,80 @@ const registerUser = async (req, res) => {
       };
     }
 
-    const user = await User.create(userData)
+    const user = await User.create(userData);
     req.session.user = { id: user._id, role: user.role }; // Store only user ID and user role in session
-    res.render('./auth/thanks.ejs', { user: user })
+    res.render('./auth/thanks.ejs', { user: user });
   } catch (err) {
-    res.render('auth/sign-up.ejs', { error: `Registration failed: ${err}` });
-    console.error('An error has occurred registering a user!', err.message)
+    res.render('auth/sign-up.ejs', { error: 'Something went wrong! Please try again...' });
+    console.error(err);
   }
 }
 
 const signInUser = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email })
+    const email = req.body.email.trim();
+    const password = req.body.password.trim();
+
+    const user = await User.findOne({ email: email });
     if (!user) {
       return res.render('auth/sign-in.ejs', { error: 'Invalid email' });
     }
     const validPassword = bcrypt.compareSync(
-      req.body.password,
+      password,
       user.password
-    )
+    );
     if (!validPassword) {
       return res.render('auth/sign-in.ejs', { error: 'Invalid password' });
     }
     req.session.user = { id: user._id, role: user.role }; // Store only user ID and user role in session
-    res.render('./auth/thanks.ejs', { user: user })
+    res.render('./auth/thanks.ejs', { user: user });
   } catch (err) {
-    res.render('auth/sign-in.ejs', { error: err });
-    console.error('An error has occurred signing in a user!', err)
+    res.render('auth/sign-in.ejs', { error: "Something went wrong! Please try again..." });
+    console.error(err);
   }
 }
 
 const signOutUser = (req, res) => {
   try {
-    req.session.destroy()
-    res.redirect('/auth/sign-in')
+    req.session.destroy();
+    res.redirect('/auth/sign-in');
   } catch (err) {
-    console.error('An error has occurred signing out a user!', err.message)
+    res.redirect('/');
+    console.error(err);
   }
 }
 
 const updatePassword = async (req, res) => {
   try {
-    const user = await User.findById(req.session.user.id)
+    const user = await User.findById(req.session.user.id);
     if (!user) {
-      return res.render('auth/update-password', { error: 'No user with that ID exists!' });
+      return res.render('auth/update-password.ejs', { error: 'No user with that ID exists!' });
     }
     const validPassword = bcrypt.compareSync(
-      req.body.oldPassword,
+      req.body.oldPassword.trim(),
       user.password
-    )
+    );
     if (!validPassword) {
-      return res.render('auth/update-password', { error: 'Incorrect old password! Please try again.' });
+      return res.render('auth/update-password.ejs', { error: 'Incorrect old password! Please try again.' });
     }
-    if (req.body.newPassword !== req.body.confirmNewPassword) {
-      return res.render('auth/update-password', { error: 'Password and Confirm Password must match' });
+
+    // Validate user inputs
+    const newPassword = req.body.newPassword.trim();
+    const confirmNewPassword = req.body.confirmNewPassword.trim();
+    if (!newPassword || !passwordRegex.test(newPassword)) {
+      return res.render('auth/update-password.ejs', { error: 'Password must be at least 8 characters long, with at least one letter, one number, and one special character' });
     }
-    const hashedPassword = bcrypt.hashSync(req.body.newPassword, 12)
-    user.password = hashedPassword
-    await user.save()
-    res.render('./auth/confirm.ejs', { user: user })
-  } catch (error) {
-    res.render('auth/update-password', { error: "An error has occurred updating a user's password!" });
-    console.error(
-      "An error has occurred updating a user's password!",
-      error.message
-    )
+    if (newPassword !== confirmNewPassword) {
+      return res.render('auth/update-password.ejs', { error: 'Password and Confirm Password must match' });
+    }
+
+    const hashedPassword = bcrypt.hashSync(newPassword, 12);
+    user.password = hashedPassword;
+    await user.save();
+    res.render('./auth/confirm.ejs', { user: user });
+  } catch (err) {
+    res.render('auth/update-password.ejs', { error: "An error has occurred updating a user's password! Please try again..." });
+    console.error(err);
   }
 }
 

@@ -6,7 +6,7 @@
             <%= error %>
         </p>
     <% } %>
-    <form action="/users/profile/update" method="POST" enctype="multipart/form-data"> <!-- add "enctype" to enable upload file -->
+    <form action="/users/profile/update" method="POST" enctype="multipart/form-data"> <!-- add "enctype" attribute4 to enable upload file -->
         <div>
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" value="<%= user.firstName %>" required />
@@ -23,12 +23,11 @@
         </div>
 
         <div>
-            <label for="picture">Profile Picture:</label>
+            <label for="picture">User Profile Image:</label>
             <input type="file" id="picture" name="picture" accept="image/*" />
-            <% if (user.pictureUrl) { %>
-                <p>Current picture:</p>
-                <img src="<%= user.pictureUrl %>" alt="Current Profile Picture" style="max-width: 150px;" />
-            <% } %>
+            <p>Current Profile Image:</p>
+            <img src="<%= user.pictureUrl %>" alt="Current Profile Picture" style="max-width: 150px; border-radius: 50%;" />
+        </div>
         </div>
 
         <div>

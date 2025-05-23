@@ -1,6 +1,9 @@
 <%- include('../partials/header') %>
     <h1>My Reservations</h1>
     <a href="/reservations/new">Make a New Reservation</a>
+    <% if (error) { %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
     <% if (reservations.length === 0) { %>
         <p>No reservations found.</p>
     <% } else { %>
@@ -21,7 +24,7 @@
                         <td><%= reservation.status %></td>
                         <td>
                             <% if (reservation.status !== 'cancelled') { %>
-                                <form method="POST" action="/reservations/<%= reservation._id %>?_method=PUT" style="display:inline;">
+                                <form method="POST" action="/reservations/<%= reservation._id %>?_method=PUT" style="display:inline;" onsubmit="return confirm('Are you sure you want to cancel your reservation on <%= reservation.timeSlot.date.toDateString() %> at <%= reservation.timeSlot.time %>?');">
                                     <button type="submit">Cancel</button>
                                 </form>
                             <% } %>
