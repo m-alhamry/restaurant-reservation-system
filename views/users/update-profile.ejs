@@ -1,0 +1,39 @@
+<%- include('../partials/header.ejs') %>
+
+    <h2>Update Profile</h2>
+    <% if (error) { %>
+        <p style="color: red;">
+            <%= error %>
+        </p>
+    <% } %>
+    <form action="/users/profile/update" method="POST" enctype="multipart/form-data"> <!-- add "enctype" to enable upload file -->
+        <div>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" value="<%= user.firstName %>" required />
+        </div>
+
+        <div>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" value="<%= user.lastName %>" required />
+        </div>
+
+        <div>
+            <label for="phoneNo">Phone Number:</label>
+            <input type="tel" id="phoneNo" name="phoneNo" value="<%= user.phoneNo %>" />
+        </div>
+
+        <div>
+            <label for="picture">Profile Picture:</label>
+            <input type="file" id="picture" name="picture" accept="image/*" />
+            <% if (user.pictureUrl) { %>
+                <p>Current picture:</p>
+                <img src="<%= user.pictureUrl %>" alt="Current Profile Picture" style="max-width: 150px;" />
+            <% } %>
+        </div>
+
+        <div>
+            <button type="submit">Update Profile</button>
+        </div>
+    </form>
+
+<%- include('../partials/footer.ejs') %>

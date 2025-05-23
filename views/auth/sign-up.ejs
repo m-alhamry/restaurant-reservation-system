@@ -4,31 +4,36 @@
 <% if (error) { %>
     <p style="color: red;"><%= error %></p>
 <% } %>
-<form action="/auth/sign-up" method="POST">
+<form action="/auth/sign-up" method="POST" enctype="multipart/form-data"> <!-- add "enctype" to enable upload file -->
 
     <div>
         <label for="firstName">Fisrt Name:</label>
-        <input type="text" name="firstName" placeholder="First Name" required />
+        <input type="text" id="firstName" name="firstName" required />
     </div>
     
     <div>
         <label for="lastName">Last Name:</label>
-        <input type="text" name="lastName" placeholder="Last Name" required />
+        <input type="text" id="lastName" name="lastName" required />
     </div>
     
     <div>
         <label for="email">Email:</label>
-        <input type="email" name="email" placeholder="Email" required />
+        <input type="email" id="email" name="email" required />
     </div>
     
     <div>
         <label for="phoneNo">Phone Number:</label>
-        <input type="tel" id="phoneNo" name="phoneNo" placeholder="Enter your phone number">
+        <input type="tel" id="phoneNo" name="phoneNo" />
     </div>
-    
+
     <div>
-        <label>Role:</label>
-        <select name="role" required>
+        <label for="picture">Profile Picture:</label>
+        <input type="file" id="picture" name="picture" accept="image/*" />
+    </div>
+
+    <div>
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
             <option value="">--Please choose your role--</option>
             <option value="customer">Customer</option>
             <option value="staff">Staff</option>
@@ -37,12 +42,12 @@
 
     <div>
         <label for="password">Password:</label>
-        <input type="password" name="password" placeholder="Password" required />
+        <input type="password" id="password" name="password" required />
     </div>
 
-    <div?>
+    <div>
         <label for="confirmPassword">Confirm Password:</label>
-        <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+        <input type="password" id="confirmPassword" name="confirmPassword" required />
     </div>
 
     <div>

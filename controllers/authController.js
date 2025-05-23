@@ -11,24 +11,26 @@ const registerUser = async (req, res) => {
       return res.render('auth/sign-up.ejs', { error: 'Password and Confirm Password must match' });
     }
     const hashedPassword = bcrypt.hashSync(req.body.password, 12)
-    const user = await User.create({
+
+    const userData = {
       email: req.body.email,
       password: hashedPassword,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       phoneNo: req.body.phoneNo,
-      picture: req.body.picture,
-      role: req.body.role //"costumer", // Staff accounts created separately (e.g., by admin)
-    })
-    await user.save();
-    req.session.user = {
-      _id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phoneNo: user.phoneNo,
-      role: user.role,
+      role: req.body.role // 'customer', // Staff accounts created separately (e.g., by admin)
+    };
+
+    // If a file is uploaded, add it to the user data
+    if (req.file) {
+      userData.picture = {
+        data: req.file.buffer, // Binary data from Multer
+        contentType: req.file.mimetype, // MIME type (e.g., 'image/jpeg')
+      };
     }
+
+    const user = await User.create(userData)
+    req.session.user = { id: user._id, role: user.role }; // Store only user ID and user role in session
     res.render('./auth/thanks.ejs', { user: user })
   } catch (err) {
     res.render('auth/sign-up.ejs', { error: `Registration failed: ${err}` });
@@ -49,15 +51,8 @@ const signInUser = async (req, res) => {
     if (!validPassword) {
       return res.render('auth/sign-in.ejs', { error: 'Invalid password' });
     }
-    req.session.user = {
-      id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phoneNo: user.phoneNo,
-      role: user.role,
-    }
-    res.render('./auth/thanks.ejs', { user })
+    req.session.user = { id: user._id, role: user.role }; // Store only user ID and user role in session
+    res.render('./auth/thanks.ejs', { user: user })
   } catch (err) {
     res.render('auth/sign-in.ejs', { error: err });
     console.error('An error has occurred signing in a user!', err)
@@ -92,7 +87,7 @@ const updatePassword = async (req, res) => {
     const hashedPassword = bcrypt.hashSync(req.body.newPassword, 12)
     user.password = hashedPassword
     await user.save()
-    res.render('./auth/confirm.ejs', { user })
+    res.render('./auth/confirm.ejs', { user: user })
   } catch (error) {
     res.render('auth/update-password', { error: "An error has occurred updating a user's password!" });
     console.error(

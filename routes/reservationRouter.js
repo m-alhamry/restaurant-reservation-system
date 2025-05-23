@@ -9,8 +9,6 @@ router.get('/', auth.isAuthenticated, auth.isCustomer, reserveController.getCust
 
 router.get('/new', auth.isAuthenticated, auth.isCustomer, reserveController.getNewReservation)
 
-router.get('/new', auth.isAuthenticated, auth.isCustomer, reserveController.postNewReservation)
-
 router.put('/:id', auth.isAuthenticated, auth.isCustomer, reserveController.cancelReservationById )
 
 module.exports = router

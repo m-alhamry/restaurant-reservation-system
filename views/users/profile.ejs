@@ -1,9 +1,17 @@
 <%- include('../partials/header') %>
     <h1>Your Profile</h1>
+    <% if (user.pictureUrl) { %>
+        <img src="<%= user.pictureUrl %>" alt="Profile Picture" style="max-width: 150px; border-radius: 50%;" />
+    <% } else { %>
+        <p>No profile picture uploaded.</p>
+    <% } %>
     <p><strong>Name:</strong> <%= user.firstName %> <%= user.lastName %></p>
     <p><strong>Email:</strong> <%= user.email %></p>
     <p><strong>Phone:</strong> <%= user.phoneNo %></p>
     <p><strong>Role:</strong> <%= user.role %></p>
+    <div>
+        <a href="/users/profile/update">Edit Profile</a>
+    </div>
     <% if (user.role === 'customer') { %>
         <a href="/reservations">View My Reservations</a>
     <% } %>
