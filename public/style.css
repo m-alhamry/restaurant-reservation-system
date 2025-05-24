@@ -1,0 +1,423 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Quicksand', sans-serif;
+  background-color: #dad4d4;
+  color: #444444;
+  line-height: 1.6;
+}
+
+nav a {
+  margin: 0 10px;
+  color: #dad4d4;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signin-container {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.signin-container h2 {
+    color: #444444;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.signin-container form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.signin-container button[type="submit"] {
+    background-color: #444444;
+    color: #dad4d4;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 1em;
+    margin-left: 50px;
+    margin-top: 30px;
+}
+
+.signup-container {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.signup-container h2 {
+    color: #444444;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.signup-container form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-container button[type="submit"] {
+    background-color: #444444;
+    color: #dad4d4;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 1em;
+    margin-top: 30px;
+}
+
+.thanks-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  padding: 20px;
+}
+
+.thanks-container h2 {
+  max-width: 800px;
+  background-color: #444444;
+  padding: 30px;
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #dad4d4;
+  margin: 10px 0;
+  text-align: center
+}
+
+.profile-details-card {
+    background-color: #444444;
+    padding: 30px;
+    border-radius: 8px;
+    width: 70%;
+    max-width: 350px; 
+    margin-bottom: 20px;
+    color: #dad4d4;
+}
+
+.profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 410px;
+}
+
+.profile-actions a {
+    display: block;
+    background-color: #444444;
+    color: #dad4d4;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: normal;
+    text-align: center;
+    transition: background-color 0.2s ease;
+    box-shadow: none;
+    border: none;
+}
+
+.updateProfile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.updateProfile-container form {
+    background-color: #444444;
+    padding: 30px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: #dad4d4;
+}
+
+.updateProfile-container button[type="submit"] {
+    background-color: #444444;
+    color: #dad4d4; 
+    width: 100%;
+    margin-top: 10px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.updatePassword-container {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.updatePassword-container h2 {
+    color: #444444;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.updatePassword-container form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.updatePassword-container button[type="submit"] {
+    background-color: #444444;
+    color: #dad4d4;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 1em;
+    margin-top: 30px;
+}
+
+.reservations-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.reservations-container h1 {
+    color: #444444;
+    margin-bottom: 25px;
+    font-size: 2em;
+    text-align: center;
+}
+
+.reservations-container table {
+    width: 90%;
+    max-width: 1000px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.reservations-container th,
+.reservations-container td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #444444;
+}
+
+.reservations-container th {
+    background-color: #444444;
+    color: #dad4d4;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.reservations-container .action-button.confirm {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.reservations-container .action-button.cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+.manageTimeSlote-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.manageTimeSlote-container h1 {
+    color: #444444;
+    margin-bottom: 25px;
+    font-size: 2em;
+    text-align: center;
+}
+
+.manageTimeSlote-container table {
+    width: 90%;
+    max-width: 1000px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.manageTimeSlote-container th,
+.manageTimeSlote-container td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #444444;
+}
+
+.manageTimeSlote-container th {
+    background-color: #444444;
+    color: #dad4d4;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.manageTimeSlote-container .action-button.delete {
+    background-color: #f44336;
+    color: white;
+}
+
+.manageTimeSlote-container a {
+    display: block;
+    background-color: #444444;
+    color: #dad4d4;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: normal;
+    text-align: center;
+    transition: background-color 0.2s ease;
+    box-shadow: none;
+    border: none;
+}
+
+.newTimeSlot-container {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.newTimeSlot-container h2 {
+    color: #444444;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.newTimeSlot-container form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.newTimeSlot-container button[type="submit"] {
+    background-color: #444444;
+    color: #dad4d4;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 1em;
+    margin-left: 50px;
+    margin-top: 30px;
+}
+
+.customerReservations-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.customerReservations-container h1 {
+    color: #444444;
+    margin-bottom: 25px;
+    font-size: 2em;
+    text-align: center;
+}
+
+.customerReservations-container table {
+    width: 90%;
+    max-width: 1000px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.customerReservations-container th,
+.customerReservations-container td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #444444;
+}
+
+
+.customerReservations-container th {
+    background-color: #444444;
+    color: #dad4d4;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.customerReservations-container .action-button.cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+.newReservations-container {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.newReservations-container h2 {
+    color: #444444;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.newReservations-container form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.newReservations-container button[type="submit"] {
+    background-color: #444444;
+    color: #dad4d4;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 1em;
+    margin-top: 30px;
+}
+
+header {
+    width: 100%;
+    background-color: #444444;
+    color: #dad4d4;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+footer {
+  margin-top: auto;
+  background-color: #444444;
+  text-align: center;
+  padding: 10px;
+  color: #dad4d4;
+}
