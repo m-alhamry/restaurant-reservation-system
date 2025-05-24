@@ -1,12 +1,25 @@
 <%- include('../../partials/header') %>
-    <h1>Add New Time Slot</h1>
+<div class="newTimeSlot-container">
+        <h1>Add New Time Slot</h1>
     <% if (error) { %>
         <p style="color: red;"><%= error %></p>
     <% } %>
     <form method="POST" action="/staff/timeSlots">
-        <label>Date: <input type="date" name="date" required></label><br>
-        <label>Time: <input type="time" name="time" required></label><br>
-        <label>Capacity: <input type="number" name="capacity" min="1" required></label><br>
+        <div>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" pdaceholder="dd/mm/yy" required>
+        </div>
+
+        <div>
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time"  required>
+        </div>
+        
+        <div>
+            <label for="capacity">Capacity:</label>
+            <input type="number" id="capacity" name="capacity" required>
+        </div>
         <button type="submit">Create</button>
     </form>
+</div>
 <%- include('../../partials/footer') %>

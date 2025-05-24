@@ -1,5 +1,6 @@
 <%- include('../partials/header.ejs') %>
 
+<div class="signup-container">
 <h2>Sign Up</h2>
 <% if (error) { %>
     <p style="color: red;"><%= error %></p>
@@ -31,14 +32,16 @@
         <input type="file" id="picture" name="picture" accept="image/*" />
     </div>
 
-    <div>
+    <!-- Role field for debugging purposes, the value for user role will be "customer" in controller side. 
+     "staff" user accounts will be created separately (e.g., by admin)  -->
+    <!-- <div>
         <label for="role">Role:</label>
         <select id="role" name="role" required>
             <option value="">--Please choose your role--</option>
             <option value="customer">Customer</option>
             <option value="staff">Staff</option>
         </select>
-    </div>
+    </div> -->
 
     <div>
         <label for="password">Password:</label>
@@ -55,5 +58,6 @@
     </div>
 
 </form>
+</div>
 
 <%- include('../partials/footer.ejs') %>

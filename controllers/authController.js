@@ -49,11 +49,24 @@ const registerUser = async (req, res) => {
       firstName: firstName,
       lastName: lastName,
       phoneNo: phoneNo,
-      role: req.body.role // 'customer', // Staff accounts created separately (e.g., by admin)
+      role: 'customer', // Staff accounts created separately (e.g., by admin)
     };
 
     // If a file is uploaded, add it to the user data
     if (req.file) {
+      // allowed image type
+      const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      // Check if the mimetype is not an image type
+      if (!allowedMimeTypes.includes(req.file.mimetype)) {
+        console.error('Error: only image file allowed');
+        return res.render('auth/sign-up.ejs', { error: 'Only image file allowed for profile user image' });
+      }
+      // Check if the file size is more than 1MB
+      if (req.file.size > (1024*1024)) {
+        console.error('Error: more than 1MB file uploaded!!');
+        return res.render('auth/sign-up.ejs', { error: 'Your image file is too large!! Image file size allowed is 1MB maximum.' });
+      }
+      if(req.file.mimetype)
       userData.picture = {
         data: req.file.buffer, // Binary data from Multer
         contentType: req.file.mimetype, // MIME type (e.g., 'image/jpeg')
