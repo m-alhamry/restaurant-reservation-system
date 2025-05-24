@@ -98,14 +98,21 @@ nav a {
   margin: 10px 0;
   text-align: center
 }
+.profile-container{
+
+justify-content: center;
+
+}
+
 
 .profile-details-card {
     background-color: #444444;
     padding: 30px;
     border-radius: 8px;
     width: 70%;
+    
     max-width: 350px; 
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
     color: #dad4d4;
 }
 
@@ -128,6 +135,7 @@ nav a {
     text-align: center;
     transition: background-color 0.2s ease;
     box-shadow: none;
+    
     border: none;
 }
 
