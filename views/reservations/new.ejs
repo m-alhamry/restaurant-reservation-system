@@ -1,5 +1,6 @@
 <%- include('../partials/header') %>
-    <h1>Make a Reservation</h1>
+<div class="newReservations-container">
+        <h1>Make a Reservation</h1>
     <% if (error) { %>
         <p style="color: red;"><%= error %></p>
     <% } %>
@@ -22,4 +23,5 @@
             <button type="submit">Book</button>
         </div>
     </form>
+</div>
 <%- include('../partials/footer') %>

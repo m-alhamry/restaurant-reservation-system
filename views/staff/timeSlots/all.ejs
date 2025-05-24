@@ -1,5 +1,6 @@
 <%- include('../../partials/header') %>
-    <h1>Manage Time Slots</h1>
+<div class="manageTimeSlote-container">
+        <h1>Manage Time Slots</h1>
     <a href="/staff/timeSlots/new">Add New Time Slot</a>
     <% if (timeSlots.length === 0) { %>
         <p>No time slots available.</p>
@@ -21,11 +22,12 @@
                     <td>
                         <!-- <a href="/staff/timeSlots/<%= slot._id %>/edit">Edit</a> -->
                         <form method="POST" action="/staff/timeSlots/<%= slot._id %>?_method=DELETE" style="display:inline;" onsubmit="return confirm('Are you sure? This will delete the time slot and all associated reservations.');">
-                            <button type="submit">Delete</button>
+                            <button type="submit" class="action-button delete">Delete</button>
                         </form>
                     </td>
                 </tr>
             <% }) %>
         </table>
     <% } %>
+</div>
 <%- include('../../partials/footer') %>

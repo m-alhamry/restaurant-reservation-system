@@ -1,5 +1,6 @@
 <%- include('../partials/header') %>
-    <h1>My Reservations</h1>
+<div class="customerReservations-container">
+        <h1>My Reservations</h1>
     <a href="/reservations/new">Make a New Reservation</a>
     <% if (reservations.length === 0) { %>
         <p>No reservations found.</p>
@@ -22,7 +23,7 @@
                         <td>
                             <% if (reservation.status !== 'cancelled') { %>
                                 <form method="POST" action="/reservations/<%= reservation._id %>?_method=PUT" style="display:inline;">
-                                    <button type="submit">Cancel</button>
+                                    <button type="submit" class="action-button cancel">Cancel</button>
                                 </form>
                             <% } %>
                         </td>
@@ -31,4 +32,5 @@
             <% }) %>
         </table>
     <% } %>
+</div>
 <%- include('../partials/footer') %>
