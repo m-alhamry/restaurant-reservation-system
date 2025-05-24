@@ -6,50 +6,48 @@
         <p>No reservations found.</p>
     <% } else { %>
         <table>
-            <thead> <tr>
-                    <th>Customer</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>People</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody> <% reservations.forEach(reservation=> { %>
-                    <% if (reservation.timeSlot) { %>
-                        <tr>
-                            <td>
-                                <%= reservation.user.firstName %>
+            <tr>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>People</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            <% reservations.forEach(reservation=> { %>
+                <% if (reservation.timeSlot) { %>
+                    <tr>
+                        <td>
+                            <%= reservation.user.firstName %>
                                 <%= reservation.user.lastName %>
-                            </td>
-                            <td>
-                                <%= reservation.timeSlot.date.toDateString() %>
-                            </td>
-                            <td>
-                                <%= reservation.timeSlot.time %>
-                            </td>
-                            <td>
-                                <%= reservation.numberOfPeople %>
-                            </td>
-                            <td>
-                                <%= reservation.status %>
-                            </td>
-                            <td>
-                                <% if (reservation.status==='pending' ) { %>
-                                    <form action="/staff/reservations/<%= reservation._id %>/confirm"
-                                        style="display:inline;" method="POST">
-                                        <button type="submit" class="action-button confirm">Confirm</button>
-                                    </form>
-                                    <form action="/staff/reservations/<%= reservation._id %>/cancel"
-                                        style="display:inline;" method="POST">
-                                        <button type="submit" class="action-button cancel">Cancel</button>
-                                    </form>
-                                <% } %>
-                            </td>
-                        </tr>
-                    <% } %>
-                <% }) %>
-            </tbody>
+                        </td>
+                        <td>
+                            <%= reservation.timeSlot.date.toDateString() %>
+                        </td>
+                        <td>
+                            <%= reservation.timeSlot.time %>
+                        </td>
+                        <td>
+                            <%= reservation.numberOfPeople %>
+                        </td>
+                        <td>
+                            <%= reservation.status %>
+                        </td>
+                        <td>
+                            <% if (reservation.status==='pending' ) { %>
+                                <form action="/staff/reservations/<%= reservation._id %>/confirm"
+                                    style="display:inline;" method="POST" onsubmit="return confirm('Are you sure you want to confirm the customer reservation on <%= reservation.timeSlot.date.toDateString() %> at <%= reservation.timeSlot.time %>?');">
+                                    <button type="submit">Confirm</button>
+                                </form>
+                                <form action="/staff/reservations/<%= reservation._id %>/cancel"
+                                    style="display:inline;" method="POST" onsubmit="return confirm('Are you sure you want to confirm the customer reservation on <%= reservation.timeSlot.date.toDateString() %> at <%= reservation.timeSlot.time %>?');">
+                                    <button type="submit">Cancel</button>
+                                </form>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% } %>
+            <% }) %>
         </table>
     <% } %>
 </div>
