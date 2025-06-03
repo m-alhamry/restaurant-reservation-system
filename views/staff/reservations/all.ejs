@@ -1,7 +1,4 @@
 <%- include('../../partials/header') %>
-
-<div class="reservations-container">
-    <h1>All Reservations</h1>
     <% if (reservations.length===0) { %>
         <p>No reservations found.</p>
     <% } else { %>
@@ -50,6 +47,4 @@
             <% }) %>
         </table>
     <% } %>
-</div>
-
 <%- include('../../partials/footer') %>

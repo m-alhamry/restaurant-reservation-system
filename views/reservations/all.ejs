@@ -1,6 +1,4 @@
 <%- include('../partials/header') %>
-<div class="customerReservations-container">
-    <h1>My Reservations</h1>
     <a href="/reservations/new">Make a New Reservation</a>
     <% if (error) { %>
         <p style="color: red;"><%= error %></p>
@@ -35,5 +33,4 @@
             <% }) %>
         </table>
     <% } %>
-</div>
 <%- include('../partials/footer') %>

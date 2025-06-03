@@ -1,6 +1,4 @@
 <%- include('../../partials/header') %>
-<div class="manageTimeSlote-container">
-    <h1>Manage Time Slots</h1>
     <a href="/staff/timeSlots/new">Add New Time Slot</a>
     <% if (timeSlots.length === 0) { %>
         <p>No time slots available.</p>
@@ -29,5 +27,4 @@
             <% }) %>
         </table>
     <% } %>
-</div>
 <%- include('../../partials/footer') %>
