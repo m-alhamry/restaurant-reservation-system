@@ -1,9 +1,20 @@
 <%- include('../partials/header') %>
-    <img src="<%= user.pictureUrl %>" alt="Profile Picture" style="max-width: 150px; border-radius: 50%;" />
-    <p><strong>Name:</strong> <%= user.firstName %> <%= user.lastName %></p>
-    <p><strong>Email:</strong> <%= user.email %></p>
-    <p><strong>Phone:</strong> <%= user.phoneNo %></p>
-    <p><strong>Role:</strong> <%= user.role %></p><br />
+
+<div class="profile-container" ></div>
+
+    <div class="profile-details-card">
+            <% if (user.pictureUrl) { %>
+        <img src="<%= user.pictureUrl %>" alt="Profile Picture" style="max-width: 150px; border-radius: 50%;" />
+    <% } else { %>
+        <p>No profile picture uploaded.</p>
+    <% } %>
+        <p><strong>Name:</strong> <%= user.firstName %> <%= user.lastName %></p>
+        <p><strong>Email:</strong> <%= user.email %></p>
+        <p><strong>Phone:</strong> <%= user.phoneNo %></p>
+        <p><strong>Role:</strong> <%= user.role %></p><br />
+    </div>
+
+    <div class="profile-actions">
     <div>
         <a href="/users/profile/update">Edit Profile</a>
     </div><br />
@@ -13,4 +24,7 @@
     <div><br />
         <a href="/auth/update-password">Update Password</a>
     </div>
+    </div>
+
+</div>
 <%- include('../partials/footer') %>
