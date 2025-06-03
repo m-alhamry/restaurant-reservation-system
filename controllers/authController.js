@@ -49,7 +49,7 @@ const registerUser = async (req, res) => {
       firstName: firstName,
       lastName: lastName,
       phoneNo: phoneNo,
-      role: req.body.role // 'customer', // Staff accounts created separately (e.g., by admin)
+      role: 'customer', // Staff accounts created separately (e.g., by admin)
     };
 
     // If a file is uploaded, add it to the user data

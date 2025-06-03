@@ -12,17 +12,24 @@
     <header>
         <nav>
             <% if (typeof user !=='undefined' && user) { %>
-                <a href="/users/profile">My Profile</a>
-            <% if (user.role==='customer' ) { %>
-                <a href="/reservations">My Reservations</a>
-            <% } else if (user.role==='staff' ) { %>
-                <a href="/staff/reservations">All Reservations</a>
-                <a href="/staff/timeSlots">Manage Time Slots</a>
-            <% } %>
-                <a href="/auth/sign-Out">Sign-Out</a>
+                <a href="/users/profile" class="<%= currentPath === '/users/profile' ? 'active' : '' %>">My Profile</a>
+                <% if (user.role==='customer' ) { %>
+                    <a href="/reservations" class="<%= currentPath === '/reservations' ? 'active' : '' %>">My
+                        Reservations</a>
+                <% } else if (user.role==='staff' ) { %>
+                    <a href="/staff/reservations"
+                        class="<%= currentPath === '/staff/reservations' ? 'active' : '' %>">All Reservations</a>
+                    <a href="/staff/timeSlots"
+                        class="<%= currentPath === '/staff/timeSlots' ? 'active' : '' %>">Manage Time Slots</a>
+                <% } %>
+                <a href="/auth/sign-Out"
+                    class="<%= currentPath === '/auth/sign-Out' ? 'active' : '' %>">Sign-Out</a>
             <% } else { %>
-                <a href="/auth/sign-in">Sign-In</a>
-                <a href="/auth/sign-up">Sign-Up</a>
+                <a href="/auth/sign-in"
+                    class="<%= currentPath === '/auth/sign-in' ? 'active' : '' %>">Sign-In</a>
+                <a href="/auth/sign-up"
+                    class="<%= currentPath === '/auth/sign-up' ? 'active' : '' %>">Sign-Up</a>
             <% } %>
         </nav>
     </header>
+    <main>

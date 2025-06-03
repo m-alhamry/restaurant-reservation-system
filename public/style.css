@@ -1,0 +1,128 @@
+/* Global reset and box-sizing */
+* {
+    box-sizing: border-box;
+}
+
+/* Body as a flex container for header-main-footer layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Main content grows to push footer down */
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px; /* Adds padding so content doesn’t stick to borders */
+}
+
+/* Header styles */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+header nav {
+    display: flex;
+    flex-wrap: wrap; /* Allows nav links to wrap on smaller screens */
+    justify-content: space-around;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin: 5px; /* Adds spacing between links */
+}
+
+header nav a.active {
+    border-bottom: 2px solid #4CAF50; /* Green border for the selected link */
+}
+
+header nav a:hover {
+    background-color: #555; /* Hover effect for navigation links */
+}
+
+/* Footer styles */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Form styles */
+form div {
+    margin-bottom: 15px; /* Spacing between form fields */
+    min-width: 400px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #4CAF50; /* Green button */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th,
+table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2; /* Light gray header */
+}
+
+table tr:hover {
+    background-color: #f5f5f5; /* Hover effect for rows */
+}
+
+/* Typography */
+h1,
+h2 {
+    color: #333;
+}
+
+p {
+    line-height: 1.6;
+}
+
+/* Image styles */
+img {
+    max-width: 100%;
+    height: auto;
+}

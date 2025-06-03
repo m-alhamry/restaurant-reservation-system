@@ -26,6 +26,7 @@ app.use(session({
 
 // Fetch user from database based on session userId
 app.use(async (req, res, next) => {
+  res.locals.currentPath = req.path; // Store the current path in res.locals to use it for navigator link style
   if (req.session.user) {
     res.locals.user = await User.findById(req.session.user.id);
   } else {
